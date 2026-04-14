@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0E0E0E;
+  --surface-low: #131313;
+  --surface-mid: #191A1A;
+  --surface-high: #252626;
+  --surface-bright: #2C2C2C;
+  --text-primary: #C6C7C5;
+  --text-muted: #767676;
+  --text-dim: #484848;
+  --accent-green: #76AA83;
+  --amber: #FFB000;
+  --amber-glow: rgba(255, 176, 0, 0.6);
+}
+
+/* ===== Global Resets ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(72, 72, 72, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(72, 72, 72, 0.6);
+}
+
+/* ===== Selection ===== */
+::selection {
+  background-color: var(--accent-green);
+  color: var(--bg);
+}
+
+/* ===== Keyframe Animations ===== */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.97; }
+}
+
+@keyframes crt-collapse {
+  from { width: 60vw; }
+  to { width: 0; }
+}
+
+@keyframes crt-expand {
+  from { width: 0; }
+  to { width: 60vw; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* ===== Utility Classes ===== */
+.animate-blink {
+  animation: blink 1s steps(1) infinite;
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.animate-flicker {
+  animation: flicker 150ms steps(1) infinite;
+}
+
+.animate-crt-collapse {
+  animation: crt-collapse 300ms ease-in-out forwards;
+}
+
+.animate-crt-expand {
+  animation: crt-expand 300ms ease-in-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 400ms ease-out forwards;
+}
+
+.animate-fade-out {
+  animation: fade-out 150ms ease-in forwards;
+}
+
+/* ===== CRT Scanlines Overlay ===== */
+.scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.05),
+    rgba(0, 0, 0, 0.05) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+}
+
+/* ===== CRT Vignette ===== */
+.crt-vignette {
+  background: radial-gradient(
+    circle at center,
+    transparent 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  pointer-events: none;
+}
+
+/* ===== Terminal Text Glow ===== */
+.terminal-text {
+  text-shadow: 0 0 8px rgba(255, 176, 0, 0.6);
+}
+
+/* ===== Screen Glow ===== */
+.screen-glow {
+  box-shadow: 0 0 60px rgba(255, 176, 0, 0.08);
+}
