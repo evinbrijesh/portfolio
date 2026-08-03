@@ -9,7 +9,7 @@ export const portfolio = {
   status: 'AVAILABLE FOR ROLES',
 
   about: {
-    quote: 'I build things that are reliable, observable, and a little bit dangerous.',
+    quote: 'Engineering at the intersection of systems programming and security research.',
     bio: 'Final-year CSE student at Mar Athanasius College of Engineering. Focused on security tooling, custom firmware, CTF competitions, and the intersection of security research, AI systems, and low-level engineering.',
     currently: {
       building:      'AegisImage — Adversarial ML for Image Protection',
