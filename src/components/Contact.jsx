@@ -17,7 +17,7 @@ function Contact({ enterTerminal, isTransitioning }) {
         {/* Email */}
         <a
           href={`mailto:${portfolio.contact.email}`}
-          className="font-body text-text-primary hover:text-accent-green transition-colors duration-300"
+          className="font-body text-accent-green hover:text-accent-green transition-colors duration-300"
           style={{ fontSize: '1.25rem' }}
         >
           {portfolio.contact.email}
