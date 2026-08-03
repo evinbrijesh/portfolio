@@ -6,12 +6,12 @@ function Contact({ enterTerminal, isTransitioning }) {
       <div className="flex flex-col items-center text-center space-y-8">
         {/* Label */}
         <span className="font-headline text-[0.625rem] uppercase tracking-[0.4em] text-text-dim">
-          INQUIRY PROTOCOL
+          {portfolio.contact.label}
         </span>
 
         {/* Tagline */}
         <p className="font-body font-light text-text-muted" style={{ fontSize: '1.2rem' }}>
-          Open to roles in Security Research, Backend Systems, or DevSecOps. Let's build something resilient.
+          {portfolio.contact.tagline}
         </p>
 
         {/* Email */}

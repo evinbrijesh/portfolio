@@ -13,53 +13,74 @@ function Projects() {
       </div>
 
       <div className="flex flex-col">
-        {portfolio.projects.map((project, index) => (
-          <a
-            key={project.name}
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group block border-t border-[rgba(72,72,72,0.15)] py-16 px-4 hover:bg-surface-low transition-all duration-500"
-            style={{ transitionTimingFunction: 'cubic-bezier(0.2, 0, 0, 1)' }}
-          >
-            <div className="flex flex-col md:flex-row justify-between items-start">
-              <div className="md:w-1/2">
-                <span className="font-headline text-[0.625rem] uppercase tracking-[0.4em] text-accent-green mb-4 block">
-                  {String(index + 1).padStart(2, '0')} / {project.type}
-                </span>
-                <h3 className="font-headline font-bold mb-6 group-hover:text-accent-green transition-colors duration-300"
-                    style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>
-                  {project.name}
-                </h3>
-                <p className="font-body text-text-muted max-w-md leading-relaxed">
-                  {project.description}
-                </p>
-              </div>
+        {portfolio.projects.map((project, index) => {
+          const isLink = Boolean(project.url)
+          const rowClass = "group block border-t border-[rgba(72,72,72,0.15)] py-16 px-4 hover:bg-surface-low transition-all duration-500"
+          const rowStyle = { transitionTimingFunction: 'cubic-bezier(0.2, 0, 0, 1)' }
 
-              <div className="md:w-1/3 mt-8 md:mt-0 flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 bg-surface-high text-text-muted text-xs font-headline tracking-wider rounded-[0.125rem]"
-                  >
-                    {tag}
+          const content = (
+            <>
+              <div className="flex flex-col md:flex-row justify-between items-start">
+                <div className="md:w-1/2">
+                  <span className="font-headline text-[0.625rem] uppercase tracking-[0.4em] text-accent-green mb-4 block">
+                    {String(index + 1).padStart(2, '0')} / {project.type}
                   </span>
-                ))}
-              </div>
+                  <h3 className="font-headline font-bold mb-6 group-hover:text-accent-green transition-colors duration-300"
+                      style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>
+                    {project.name}
+                  </h3>
+                  <p className="font-body text-text-muted max-w-md leading-relaxed">
+                    {project.description}
+                  </p>
+                </div>
 
-              <div className="hidden md:flex items-center gap-4 text-accent-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                   style={{ transform: 'translateX(0)', transitionTimingFunction: 'cubic-bezier(0.2, 0, 0, 1)' }}>
-                <span className="font-headline text-sm">VIEW DETAILS</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
-                </svg>
+                <div className="md:w-1/3 mt-8 md:mt-0 flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 bg-surface-high text-text-muted text-xs font-headline tracking-wider rounded-[0.125rem]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {isLink && (
+                  <div className="hidden md:flex items-center gap-4 text-accent-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                       style={{ transform: 'translateX(0)', transitionTimingFunction: 'cubic-bezier(0.2, 0, 0, 1)' }}>
+                    <span className="font-headline text-sm">VIEW DETAILS</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
+                    </svg>
+                  </div>
+                )}
               </div>
+              <div className="font-headline text-[0.625rem] tracking-widest text-text-dim mt-6 flex items-center gap-3">
+                {project.year} — {project.type}
+                {project.status === 'ONGOING' && (
+                  <span className="text-accent-green">[ ONGOING ]</span>
+                )}
+              </div>
+            </>
+          )
+
+          return isLink ? (
+            <a
+              key={project.name}
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={rowClass}
+              style={rowStyle}
+            >
+              {content}
+            </a>
+          ) : (
+            <div key={project.name} className={rowClass} style={rowStyle}>
+              {content}
             </div>
-            <div className="font-headline text-[0.625rem] tracking-widest text-text-dim mt-6">
-              {project.year} — {project.type}
-            </div>
-          </a>
-        ))}
+          )
+        })}
       </div>
     </section>
   )

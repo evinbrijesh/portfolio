@@ -116,7 +116,8 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
       case 'projects': {
         const lines = ['', '<span class="font-bold">PROJECTS</span>', '']
         portfolio.projects.forEach(p => {
-          lines.push(`  <span class="text-accent-green">[${p.name}]</span>  ${p.year} // ${p.description}`)
+          const flag = p.status === 'ONGOING' ? ' <span class="text-accent-green">[ONGOING]</span>' : ''
+          lines.push(`  <span class="text-accent-green">[${p.name}]</span>  ${p.year}${flag} // ${p.description}`)
           lines.push(`    Tags: ${p.tags.join(', ')}`)
           lines.push('')
         })

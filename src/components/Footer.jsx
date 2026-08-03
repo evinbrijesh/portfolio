@@ -14,7 +14,7 @@ function Footer() {
           <a href={portfolio.contact.linkedin} target="_blank" rel="noopener noreferrer" className="text-text-dim hover:text-text-primary transition-colors duration-300">
             LINKEDIN
           </a>
-          <a href={portfolio.contact.cvUrl} download className="text-text-dim hover:text-text-primary transition-colors duration-300">
+          <a href={portfolio.contact.cv} download className="text-text-dim hover:text-text-primary transition-colors duration-300">
             DOWNLOAD_CV
           </a>
         </div>

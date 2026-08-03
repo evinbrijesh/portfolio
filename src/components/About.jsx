@@ -52,23 +52,25 @@ function About() {
               </div>
             </div>
 
-            {/* Build progress bar — tied to primary project */}
-            <div>
-              <div className="flex justify-between mb-2">
-                <span className="font-headline text-[0.625rem] uppercase tracking-[0.3em] text-text-dim">
-                  {portfolio.about.buildProgressLabel}
-                </span>
-                <span className="font-headline text-[0.625rem] uppercase tracking-[0.3em] text-amber">
-                  {portfolio.about.buildProgressPercent}%
-                </span>
+            {/* Build progress bar — only shown when a numeric % exists (completed/shipped work) */}
+            {typeof portfolio.about.currently.buildProgress === 'number' && (
+              <div>
+                <div className="flex justify-between mb-2">
+                  <span className="font-headline text-[0.625rem] uppercase tracking-[0.3em] text-text-dim">
+                    {portfolio.about.currently.buildProject} BUILD PROGRESS
+                  </span>
+                  <span className="font-headline text-[0.625rem] uppercase tracking-[0.3em] text-amber">
+                    {portfolio.about.currently.buildProgress}%
+                  </span>
+                </div>
+                <div className="w-full h-[2px] bg-surface-high rounded-[0.125rem]">
+                  <div
+                    className="h-full bg-amber rounded-[0.125rem]"
+                    style={{ width: `${portfolio.about.currently.buildProgress}%` }}
+                  ></div>
+                </div>
               </div>
-              <div className="w-full h-[2px] bg-surface-high rounded-[0.125rem]">
-                <div
-                  className="h-full bg-amber rounded-[0.125rem]"
-                  style={{ width: `${portfolio.about.buildProgressPercent}%` }}
-                ></div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

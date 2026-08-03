@@ -99,6 +99,33 @@ a {
   to { opacity: 0; }
 }
 
+/* ===== Glitch Slices (RGB split displacement) ===== */
+@keyframes glitch-shift {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-3px, 2px); }
+  40%  { transform: translate(3px, -2px); }
+  60%  { transform: translate(-2px, -1px); }
+  80%  { transform: translate(2px, 1px); }
+  100% { transform: translate(0, 0); }
+}
+
+.glitch-slices {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(255, 176, 0, 0.06) 3px,
+    rgba(255, 176, 0, 0.06) 4px,
+    transparent 4px,
+    transparent 7px
+  );
+  mix-blend-mode: screen;
+}
+
+.animate-glitch {
+  animation: glitch-shift 300ms steps(2) infinite;
+}
+
 /* ===== Utility Classes ===== */
 .animate-blink {
   animation: blink 1s steps(1) infinite;
