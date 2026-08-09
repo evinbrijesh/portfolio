@@ -22,8 +22,24 @@ function ProjectCard({ project, index, hoveredSkill, setHoveredSkill }) {
 
   const isCardActive = hovered || isProjectSkillMatch
 
+  const handleTagTap = (tag) => {
+    const nextTag = hoveredSkill === tag ? null : tag
+    setHoveredSkill?.(nextTag)
+
+    // On mobile screens, auto-scroll up to TOOLSET section so user sees matching skill
+    if (nextTag && window.innerWidth < 768) {
+      setTimeout(() => {
+        const skillsEl = document.getElementById('skills')
+        if (skillsEl) {
+          skillsEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 80)
+    }
+  }
+
   return (
     <div
+      id={`project-card-${project.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -59,7 +75,7 @@ function ProjectCard({ project, index, hoveredSkill, setHoveredSkill }) {
       <div className="flex flex-col justify-between p-8 lg:p-10">
         <div>
           {/* Index + category */}
-          <span className="font-headline text-[0.625rem] uppercase tracking-[0.4em] text-accent-green mb-4 block flex items-center justify-between">
+          <span className="font-headline text-[0.625rem] uppercase tracking-[0.4em] text-accent-green mb-4 flex items-center justify-between">
             <span>{String(index + 1).padStart(2, '0')} / {project.type}</span>
             {isProjectSkillMatch && (
               <span className="text-amber font-mono text-[9px] tracking-widest animate-pulse-dot">
@@ -90,6 +106,10 @@ function ProjectCard({ project, index, hoveredSkill, setHoveredSkill }) {
                   key={tag}
                   onMouseEnter={() => setHoveredSkill?.(tag)}
                   onMouseLeave={() => setHoveredSkill?.(null)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleTagTap(tag)
+                  }}
                   className={`px-2.5 py-1 text-xs font-headline tracking-wider rounded-[0.125rem] transition-all duration-200 cursor-pointer ${
                     activeTag
                       ? 'bg-accent-green text-bg font-bold shadow-[0_0_10px_rgba(118,170,131,0.4)] scale-105'
@@ -149,6 +169,18 @@ function Projects({ hoveredSkill, setHoveredSkill }) {
     return true
   })
 
+  const handleCategorySelect = (cat) => {
+    setActiveCategory(cat)
+    if (window.innerWidth < 768) {
+      setTimeout(() => {
+        const projectsEl = document.getElementById('projects')
+        if (projectsEl) {
+          projectsEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 80)
+    }
+  }
+
   return (
     <section className="max-w-screen-2xl mx-auto px-8 md:px-12 mb-24 lg:mb-32">
       <div ref={ref} className="reveal">
@@ -168,7 +200,7 @@ function Projects({ hoveredSkill, setHoveredSkill }) {
             {CATEGORIES.map(cat => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => handleCategorySelect(cat)}
                 className={`px-3 py-1 text-xs font-headline tracking-wider rounded-[0.125rem] transition-all duration-200 border ${
                   activeCategory === cat
                     ? 'bg-accent-green text-bg border-accent-green font-semibold'

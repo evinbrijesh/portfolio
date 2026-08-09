@@ -32,7 +32,7 @@ function Hero() {
         {/* Left Column: text content */}
         <div className="lg:col-span-7 min-w-0">
           {/* Pre-heading Label */}
-          <span className="block font-headline text-xs uppercase tracking-[0.3em] text-accent-green mb-4">
+          <span className="block font-headline text-xs uppercase tracking-[0.3em] text-accent-green mb-3">
             CS ENGINEER & SYSTEMS BUILDER
           </span>
 
