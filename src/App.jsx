@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -14,6 +14,7 @@ function App() {
   const [terminalMode, setTerminalMode] = useState(false)
   const [phase, setPhase] = useState('idle')
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [hoveredSkill, setHoveredSkill] = useState(null)
 
   const enterTerminal = () => {
     if (isTransitioning) return
@@ -71,6 +72,22 @@ function App() {
     setIsTransitioning(false)
   }
 
+  // Keyboard shortcut (Ctrl+K or Cmd+K) to toggle terminal mode
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        if (terminalMode) {
+          exitTerminal()
+        } else {
+          enterTerminal()
+        }
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [terminalMode, isTransitioning])
+
   if (terminalMode) {
     return (
       <CRTTransition phase={phase} mode="terminal">
@@ -92,10 +109,10 @@ function App() {
           <About />
         </div>
         <div id="skills" style={{ scrollMarginTop: '100px' }}>
-          <Skills />
+          <Skills hoveredSkill={hoveredSkill} setHoveredSkill={setHoveredSkill} />
         </div>
         <div id="projects" style={{ scrollMarginTop: '100px' }}>
-          <Projects />
+          <Projects hoveredSkill={hoveredSkill} setHoveredSkill={setHoveredSkill} />
         </div>
         <div id="experience" style={{ scrollMarginTop: '100px' }}>
           <Experience />

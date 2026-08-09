@@ -1,4 +1,5 @@
 import { portfolio } from '../data/portfolio'
+import resumePDF from '../assets/evin_brijesh_resume.pdf'
 
 function Footer() {
   return (
@@ -14,7 +15,7 @@ function Footer() {
           <a href={portfolio.contact.linkedin} target="_blank" rel="noopener noreferrer" className="text-text-dim hover:text-text-primary transition-colors duration-300">
             LINKEDIN
           </a>
-          <a href={portfolio.contact.cv} download className="text-text-dim hover:text-text-primary transition-colors duration-300">
+          <a href={resumePDF} download="Evin_Brijesh_Resume.pdf" className="text-text-dim hover:text-text-primary transition-colors duration-300">
             DOWNLOAD_CV
           </a>
         </div>

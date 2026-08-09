@@ -1,5 +1,16 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { portfolio } from '../data/portfolio'
+import profilePic from '../assets/evinbrijesh.jpg'
+
+/** Escape user-supplied strings before injecting into innerHTML output lines. */
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
 
 export function useTerminal({ exitTerminal, onBootComplete }) {
   const [outputLines, setOutputLines] = useState([])
@@ -11,15 +22,21 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
   const outputRef = useRef(null)
   const inputRef = useRef(null)
 
-  // Auto-scroll on new output
+  // Auto-scroll on new output with smooth behavior
   useEffect(() => {
     if (outputRef.current) {
-      outputRef.current.scrollTop = outputRef.current.scrollHeight
+      outputRef.current.scrollTo({
+        top: outputRef.current.scrollHeight,
+        behavior: 'smooth',
+      })
     }
   }, [outputLines])
 
-  // Run boot sequence on mount
+  // Run boot sequence on mount — with cleanup to prevent double execution in Strict Mode
   useEffect(() => {
+    setOutputLines([])
+    setBootComplete(false)
+
     const bootLines = [
       '[ <span class="font-bold">OK</span> ] BIOS v1.4 .............. [OK]',
       '[ <span class="font-bold">OK</span> ] MEMORY CHECK 640K ....... [OK]',
@@ -28,36 +45,43 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
       '',
       '<span class="font-bold">PORTFOLIO OS</span> — Ready.',
       'Unauthorized access is recorded.',
-      "Type 'help' for commands or 'exit' to return to GUI.",
+      "Type 'help' or 'about' for commands, or 'exit' (or ESC) to return to GUI.",
     ]
 
+    let timeoutId
     let i = 0
-    const delayedLines = []
 
     const printLine = () => {
       if (i < bootLines.length) {
-        setOutputLines(prev => [...prev, bootLines[i]])
+        const line = bootLines[i]
+        setOutputLines(prev => [...prev, line])
         i++
-        setTimeout(printLine, 80)
+        timeoutId = setTimeout(printLine, 60)
       } else {
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
           setBootComplete(true)
           onBootComplete?.()
           inputRef.current?.focus()
-        }, 400)
+        }, 300)
       }
     }
 
-    printLine()
+    timeoutId = setTimeout(printLine, 60)
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId)
+    }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const streamOutput = useCallback((lines) => {
     let i = 0
+    let timeoutId
     const stream = () => {
       if (i < lines.length) {
-        setOutputLines(prev => [...prev, lines[i]])
+        const line = lines[i]
+        setOutputLines(prev => [...prev, line])
         i++
-        setTimeout(stream, 30)
+        timeoutId = setTimeout(stream, 25)
       }
     }
     stream()
@@ -66,8 +90,8 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
   const processCommand = useCallback((cmd) => {
     const trimmed = cmd.trim().toLowerCase()
 
-    // Add the command echo to output
-    setOutputLines(prev => [...prev, `<span class="text-text-muted">visitor@local:~$</span> ${cmd}`])
+    // Add the command echo to output (user input MUST be escaped)
+    setOutputLines(prev => [...prev, `<span class="text-text-muted">visitor@local:~$</span> ${escapeHtml(cmd)}`])
 
     // Add to history
     if (trimmed && trimmed !== '') {
@@ -80,32 +104,61 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
         streamOutput([
           '<span class="font-bold">Available commands:</span>',
           '',
-          '  <span class="text-accent-green">about</span>       — Who I am and what I do',
-          '  <span class="text-accent-green">skills</span>      — Technical skillset by category',
-          '  <span class="text-accent-green">projects</span>    — Project portfolio',
-          '  <span class="text-accent-green">experience</span>  — Work history',
-          '  <span class="text-accent-green">contact</span>     — How to reach me',
-          '  <span class="text-accent-green">clear</span>       — Clear terminal output',
-          '  <span class="text-accent-green">exit</span>        — Return to GUI mode',
+          '  <span class="text-accent-green">about</span> / <span class="text-accent-green">fetch</span> — Fastfetch system info & profile',
+          '  <span class="text-accent-green">skills</span>        — Technical skillset & toolset matrix',
+          '  <span class="text-accent-green">projects</span>      — Project portfolio & system specs',
+          '  <span class="text-accent-green">experience</span>    — Work & research history',
+          '  <span class="text-accent-green">contact</span>       — Contact details & links',
+          '  <span class="text-accent-green">status</span>        — Live telemetry & current tasks',
+          '  <span class="text-accent-green">clear</span>         — Clear terminal output',
+          '  <span class="text-accent-green">exit</span>          — Return to GUI mode',
         ])
         break
 
       case 'about':
-        streamOutput([
-          '',
-          `<span class="font-bold">${portfolio.name}</span>`,
-          `${portfolio.about.bio}`,
-          '',
-          `"${portfolio.about.quote}"`,
-          '',
+      case 'fastfetch':
+      case 'neofetch':
+      case 'fetch':
+        setOutputLines(prev => [
+          ...prev,
+          `<div class="flex flex-col md:flex-row gap-8 items-center my-4 p-6 bg-[#131313]/95 border border-accent-green/40 rounded-sm shadow-xl">
+            <div class="relative w-44 sm:w-52 h-56 sm:h-64 shrink-0 border-2 border-accent-green/60 rounded-sm overflow-hidden shadow-2xl">
+              <img src="${profilePic}" alt="Evin Brijesh" class="w-full h-full object-cover filter grayscale contrast-125 brightness-95" />
+              <div class="absolute inset-0 scanlines opacity-50 pointer-events-none"></div>
+              <div class="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-accent-green"></div>
+              <div class="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-accent-green"></div>
+              <div class="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-accent-green"></div>
+              <div class="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-accent-green"></div>
+            </div>
+            <div class="font-mono text-sm sm:text-base leading-relaxed space-y-1.5 flex-1 min-w-0">
+              <div class="text-base sm:text-lg font-bold text-accent-green flex items-center justify-between border-b border-surface-high pb-2 mb-3">
+                <span>evin@brijesh-sys</span>
+                <span class="text-xs text-amber font-mono">[ ACTIVE_PROFILE ]</span>
+              </div>
+              <div><span class="text-accent-green font-bold">[ OS ]</span> Portfolio OS (CS Engineer &amp; Systems Builder)</div>
+              <div><span class="text-accent-green font-bold">[ EDU ]</span> Mar Athanasius College of Engg (B.Tech CSE '26)</div>
+              <div><span class="text-accent-green font-bold">[ ROLE ]</span> Cybersecurity Research Intern @ IIIT Kottayam</div>
+              <div><span class="text-accent-green font-bold">[ FOCUS ]</span> Security Research, AI Systems, Firmware</div>
+              <div><span class="text-accent-green font-bold">[ BUILD ]</span> AegisImage (Adversarial ML Image Defense)</div>
+              <div><span class="text-accent-green font-bold">[ HONEYPOT ]</span> MiragePot (~15k Py Lines · 566 tests ✓)</div>
+              <div><span class="text-accent-green font-bold">[ SHELL ]</span> Hyprland / Arch Linux / Neovim / Vite</div>
+              <div><span class="text-accent-green font-bold">[ LOC ]</span> Kothamangalam, IN</div>
+              <div><span class="text-accent-green font-bold">[ STATUS ]</span> <span class="text-accent-green font-bold animate-pulse-dot">AVAILABLE FOR ROLES</span></div>
+              <div class="pt-3 flex flex-wrap gap-2">
+                <span class="px-2.5 py-1 bg-red-500/20 text-red-400 text-xs rounded font-bold border border-red-500/30">SECURITY</span>
+                <span class="px-2.5 py-1 bg-accent-green/20 text-accent-green text-xs rounded font-bold border border-accent-green/30">ADV_ML</span>
+                <span class="px-2.5 py-1 bg-amber/20 text-amber text-xs rounded font-bold border border-amber/30">FIRMWARE</span>
+              </div>
+            </div>
+          </div>`
         ])
         break
 
       case 'skills': {
-        const lines = ['', '<span class="font-bold">SKILL MATRIX</span>', '']
+        const lines = ['', '<span class="font-bold">TECHNICAL SKILL MATRIX</span>', '']
         portfolio.skills.forEach(group => {
           lines.push(`  <span class="text-accent-green">${group.category.toUpperCase()}</span>`)
-          const items = group.items.join(' · ')
+          const items = group.items.join('  ·  ')
           lines.push(`    ${items}`)
           lines.push('')
         })
@@ -114,11 +167,14 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
       }
 
       case 'projects': {
-        const lines = ['', '<span class="font-bold">PROJECTS</span>', '']
-        portfolio.projects.forEach(p => {
-          const flag = p.status === 'ONGOING' ? ' <span class="text-accent-green">[ONGOING]</span>' : ''
-          lines.push(`  <span class="text-accent-green">[${p.name}]</span>  ${p.year}${flag} // ${p.description}`)
-          lines.push(`    Tags: ${p.tags.join(', ')}`)
+        const lines = ['', '<span class="font-bold">FEATURED PROJECTS</span>', '']
+        portfolio.projects.forEach((p, idx) => {
+          const flag = p.status === 'ONGOING' ? ' <span class="text-accent-green">[ONGOING RESEARCH]</span>' : ' <span class="text-text-dim">[COMPLETE]</span>'
+          const link = p.url ? ` <span class="text-text-dim">(${p.url})</span>` : ''
+          lines.push(`  <span class="text-accent-green">0${idx + 1}. [${p.name}]</span>  ${p.year}${flag}`)
+          lines.push(`     Type: ${p.type}`)
+          lines.push(`     Desc: ${p.description}`)
+          lines.push(`     Tags: ${p.tags.join(', ')}${link}`)
           lines.push('')
         })
         streamOutput(lines)
@@ -126,10 +182,10 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
       }
 
       case 'experience': {
-        const lines = ['', '<span class="font-bold">EXPERIENCE</span>', '']
+        const lines = ['', '<span class="font-bold">PROFESSIONAL EXPERIENCE</span>', '']
         portfolio.experience.forEach(e => {
-          lines.push(`  <span class="text-text-dim">${e.dateRange}</span>`)
-          lines.push(`  <span class="font-bold">${e.role}</span> @ ${e.company}`)
+          lines.push(`  <span class="text-text-dim">[ ${e.dateRange} ]</span>`)
+          lines.push(`  <span class="font-bold text-accent-green">${e.role}</span> @ <span class="font-bold">${e.company}</span>`)
           lines.push(`    ${e.description}`)
           lines.push('')
         })
@@ -140,11 +196,26 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
       case 'contact':
         streamOutput([
           '',
-          '<span class="font-bold">CONTACT</span>',
+          '<span class="font-bold">INQUIRY & CONTACT PROTOCOL</span>',
           '',
           `  Email:    <span class="text-accent-green">${portfolio.contact.email}</span>`,
           `  GitHub:   <span class="text-accent-green">${portfolio.contact.github}</span>`,
           `  LinkedIn: <span class="text-accent-green">${portfolio.contact.linkedin}</span>`,
+          `  Resume:   <span class="text-accent-green">${portfolio.contact.cv}</span>`,
+          '',
+        ])
+        break
+
+      case 'status':
+      case 'sys':
+        streamOutput([
+          '',
+          '<span class="font-bold">SYSTEM TELEMETRY & LIVE READOUT</span>',
+          '',
+          `  Status:             <span class="text-accent-green">${portfolio.status}</span>`,
+          `  Building:           <span class="text-amber">${portfolio.about.currently.building}</span>`,
+          `  Reading:            ${portfolio.about.currently.reading}`,
+          `  Listening:          ${portfolio.about.currently.listening}`,
           '',
         ])
         break
@@ -160,7 +231,7 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
       default:
         if (trimmed) {
           streamOutput([
-            `command not found: ${trimmed} — type 'help' for available commands`,
+            `command not found: ${escapeHtml(trimmed)} — type 'help' or 'about' for available commands`,
           ])
         }
         break

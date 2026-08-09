@@ -34,9 +34,13 @@ function Navbar({ enterTerminal, isTransitioning }) {
         <button
           onClick={enterTerminal}
           disabled={isTransitioning}
-          className="hidden md:block bg-surface-bright text-text-primary px-4 py-2 text-[10px] font-headline font-bold tracking-widest uppercase rounded-[0.125rem] hover:bg-surface-high transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="hidden md:flex items-center gap-2 bg-surface-bright text-text-primary px-3.5 py-1.5 text-[10px] font-headline font-bold tracking-widest uppercase rounded-[0.125rem] hover:bg-surface-high hover:text-accent-green transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group border border-surface-bright hover:border-accent-green/30"
+          title="Toggle TUI mode (Ctrl+K or Cmd+K)"
         >
-          [ TERMINAL ]
+          <span>[ TERMINAL ]</span>
+          <kbd className="font-mono text-[9px] px-1 py-0.5 bg-surface-low text-text-muted group-hover:text-accent-green rounded border border-[#383838] transition-colors">
+            CTRL+K
+          </kbd>
         </button>
       </div>
     </nav>

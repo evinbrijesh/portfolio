@@ -1,10 +1,34 @@
+import { useState, useRef } from 'react'
+import { useHoneypotCanvas } from '../hooks/useHoneypotCanvas'
 import { portfolio } from '../data/portfolio'
 import profilePic from '../assets/evinbrijesh.jpg'
 
 function Hero() {
+  const [imgError, setImgError] = useState(false)
+  const canvasRef = useRef(null)
+  useHoneypotCanvas(canvasRef)
+
   return (
-    <section id="hero" className="w-full min-h-screen max-w-screen-2xl mx-auto px-8 md:px-12 mb-[40vh]" style={{ paddingTop: '96px' }}>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-[85vh]">
+    <section
+      id="hero"
+      className="w-full min-h-[85vh] max-w-screen-2xl mx-auto px-8 md:px-12 mb-20 lg:mb-28"
+      style={{ paddingTop: '80px', position: 'relative', overflow: 'hidden' }}
+    >
+      {/* Honeypot log stream background canvas */}
+      <canvas
+        ref={canvasRef}
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
+      {/* Hero content — sits above the canvas */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-[75vh]" style={{ position: 'relative', zIndex: 1 }}>
         {/* Left Column: text content */}
         <div className="lg:col-span-7 min-w-0">
           {/* Pre-heading Label */}
@@ -13,7 +37,7 @@ function Hero() {
           </span>
 
           {/* Main Heading */}
-          <h1 className="font-body font-bold text-5xl md:text-7xl tracking-tight text-[#C6C7C5] mb-6 leading-none">
+          <h1 className="font-body font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight text-[#C6C7C5] mb-6 leading-none">
             {portfolio.name}
           </h1>
 
@@ -68,11 +92,18 @@ function Hero() {
 
             {/* Image Wrapper for Overlay */}
             <div className="relative overflow-hidden rounded-sm">
-              <img
-                src={profilePic}
-                alt={portfolio.name}
-                className="w-full aspect-[3/4] object-cover object-position-[50%_-5%] filter grayscale contrast-125 brightness-90 scale-100 group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100 transition-all duration-500 rounded-sm"
-              />
+              {imgError ? (
+                <div className="w-full aspect-[3/4] bg-surface-high flex items-center justify-center rounded-sm">
+                  <span className="font-mono text-xs text-text-dim">[ NO_SIGNAL ]</span>
+                </div>
+              ) : (
+                <img
+                  src={profilePic}
+                  alt={portfolio.name}
+                  onError={() => setImgError(true)}
+                  className="w-full aspect-[3/4] object-cover filter grayscale contrast-125 brightness-90 scale-100 group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100 transition-all duration-500 rounded-sm"
+                />
+              )}
 
               {/* CRT SCANLINES */}
               <div className="absolute inset-0 scanlines z-10 pointer-events-none"></div>

@@ -1,9 +1,12 @@
 import { portfolio } from '../data/portfolio'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 
 function About() {
+  const ref = useScrollReveal()
+
   return (
-    <section className="max-w-screen-2xl mx-auto px-8 md:px-12 mb-40">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+    <section className="max-w-screen-2xl mx-auto px-8 md:px-12 mb-24 lg:mb-32">
+      <div ref={ref} className="reveal grid grid-cols-1 md:grid-cols-12 gap-12">
         {/* Left: Manifesto + Bio */}
         <div className="md:col-span-7">
           <span className="block font-headline text-[0.625rem] uppercase tracking-[0.4em] text-accent-green mb-6">
