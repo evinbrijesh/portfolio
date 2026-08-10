@@ -136,7 +136,7 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
                 <span class="text-xs text-amber font-mono">[ ACTIVE_PROFILE ]</span>
               </div>
               <div><span class="text-accent-green font-bold">[ OS ]</span> Portfolio OS (CS Engineer &amp; Systems Builder)</div>
-              <div><span class="text-accent-green font-bold">[ EDU ]</span> Mar Athanasius College of Engg (B.Tech CSE '26)</div>
+              <div><span class="text-accent-green font-bold">[ EDU ]</span> Mar Athanasius College of Engg (B.Tech CSE '27)</div>
               <div><span class="text-accent-green font-bold">[ ROLE ]</span> Cybersecurity Research Intern @ IIIT Kottayam</div>
               <div><span class="text-accent-green font-bold">[ FOCUS ]</span> Security Research, AI Systems, Firmware</div>
               <div><span class="text-accent-green font-bold">[ BUILD ]</span> AegisImage (Adversarial ML Image Defense)</div>
