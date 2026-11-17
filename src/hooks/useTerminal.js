@@ -106,8 +106,9 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
           '',
           '  <span class="text-accent-green">about</span> / <span class="text-accent-green">fetch</span> — Fastfetch system info & profile',
           '  <span class="text-accent-green">skills</span>        — Technical skillset & toolset matrix',
-          '  <span class="text-accent-green">projects</span>      — Project portfolio & system specs',
-          '  <span class="text-accent-green">experience</span>    — Work & research history',
+          '  <span class="text-accent-green">projects</span>      — Primary flagship project roster',
+          '  <span class="text-accent-green">archive</span>       — Secondary & archived project catalog',
+          '  <span class="text-accent-green">experience</span>    — Work, research & leadership history',
           '  <span class="text-accent-green">contact</span>       — Contact details & links',
           '  <span class="text-accent-green">status</span>        — Live telemetry & current tasks',
           '  <span class="text-accent-green">clear</span>         — Clear terminal output',
@@ -136,18 +137,19 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
                 <span class="text-xs text-amber font-mono">[ ACTIVE_PROFILE ]</span>
               </div>
               <div><span class="text-accent-green font-bold">[ OS ]</span> Portfolio OS (CS Engineer &amp; Systems Builder)</div>
-              <div><span class="text-accent-green font-bold">[ EDU ]</span> Mar Athanasius College of Engg (B.Tech CSE '27)</div>
+              <div><span class="text-accent-green font-bold">[ EDU ]</span> Mar Athanasius College of Engg (B.Tech CSE '27 · CGPA 7.88)</div>
               <div><span class="text-accent-green font-bold">[ ROLE ]</span> Cybersecurity Research Intern @ IIIT Kottayam</div>
-              <div><span class="text-accent-green font-bold">[ FOCUS ]</span> Security Research, AI Systems, Firmware</div>
-              <div><span class="text-accent-green font-bold">[ BUILD ]</span> AegisImage (Adversarial ML Image Defense)</div>
-              <div><span class="text-accent-green font-bold">[ HONEYPOT ]</span> MiragePot (~15k Py Lines · 566 tests ✓)</div>
-              <div><span class="text-accent-green font-bold">[ SHELL ]</span> Hyprland / Arch Linux / Neovim / Vite</div>
+              <div><span class="text-accent-green font-bold">[ FOCUS ]</span> AI Agent Security, Defensive Systems, Geospatial ML</div>
+              <div><span class="text-accent-green font-bold">[ FLAGSHIP ]</span> RAVEN (AI Agent Security Regression &amp; Guardrails)</div>
+              <div><span class="text-accent-green font-bold">[ HONEYPOT ]</span> MiragePot (LLM SSH Honeypot · 566 tests ✓)</div>
+              <div><span class="text-accent-green font-bold">[ SATELLITE ]</span> SIREN (Glacial Flood Radar Early Warning)</div>
+              <div><span class="text-accent-green font-bold">[ DOMAIN ]</span> evinbrijesh.is-a.dev</div>
               <div><span class="text-accent-green font-bold">[ LOC ]</span> Kothamangalam, IN</div>
               <div><span class="text-accent-green font-bold">[ STATUS ]</span> <span class="text-accent-green font-bold animate-pulse-dot">AVAILABLE FOR ROLES</span></div>
               <div class="pt-3 flex flex-wrap gap-2">
-                <span class="px-2.5 py-1 bg-red-500/20 text-red-400 text-xs rounded font-bold border border-red-500/30">SECURITY</span>
-                <span class="px-2.5 py-1 bg-accent-green/20 text-accent-green text-xs rounded font-bold border border-accent-green/30">ADV_ML</span>
-                <span class="px-2.5 py-1 bg-amber/20 text-amber text-xs rounded font-bold border border-amber/30">FIRMWARE</span>
+                <span class="px-2.5 py-1 bg-red-500/20 text-red-400 text-xs rounded font-bold border border-red-500/30">AGENT_SEC</span>
+                <span class="px-2.5 py-1 bg-accent-green/20 text-accent-green text-xs rounded font-bold border border-accent-green/30">HONEYPOT</span>
+                <span class="px-2.5 py-1 bg-amber/20 text-amber text-xs rounded font-bold border border-amber/30">GEOSPATIAL</span>
               </div>
             </div>
           </div>`
@@ -167,14 +169,30 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
       }
 
       case 'projects': {
-        const lines = ['', '<span class="font-bold">FEATURED PROJECTS</span>', '']
+        const lines = ['', '<span class="font-bold">FEATURED FLAGSHIP PROJECTS</span>', '']
         portfolio.projects.forEach((p, idx) => {
-          const flag = p.status === 'ONGOING' ? ' <span class="text-accent-green">[ONGOING RESEARCH]</span>' : ' <span class="text-text-dim">[COMPLETE]</span>'
+          const badge = p.badge ? ` <span class="text-accent-green">[${p.badge}]</span>` : ''
           const link = p.url ? ` <span class="text-text-dim">(${p.url})</span>` : ''
-          lines.push(`  <span class="text-accent-green">0${idx + 1}. [${p.name}]</span>  ${p.year}${flag}`)
-          lines.push(`     Type: ${p.type}`)
-          lines.push(`     Desc: ${p.description}`)
-          lines.push(`     Tags: ${p.tags.join(', ')}${link}`)
+          lines.push(`  <span class="text-accent-green">0${idx + 1}. [${p.name}]</span>  ${p.year}${badge}`)
+          lines.push(`     Type:  ${p.type}`)
+          lines.push(`     Desc:  ${p.description}`)
+          lines.push(`     Stack: ${p.tags.join(', ')}${link}`)
+          lines.push('')
+        })
+        lines.push('  <span class="text-text-dim">Tip: Type \'archive\' to inspect secondary &amp; specialized projects.</span>')
+        lines.push('')
+        streamOutput(lines)
+        break
+      }
+
+      case 'archive':
+      case 'all': {
+        const lines = ['', '<span class="font-bold">SECONDARY &amp; ARCHIVED PROJECTS CATALOG</span>', '']
+        portfolio.archive.forEach((p, idx) => {
+          const link = p.url ? ` <span class="text-text-dim">(${p.url})</span>` : ''
+          lines.push(`  <span class="text-amber">0${idx + 1}. [${p.name}]</span>  ${p.year} <span class="text-accent-green">[${p.stamp}]</span>${link}`)
+          lines.push(`     ${p.description}`)
+          lines.push(`     Stack: ${p.tags.join(' · ')}`)
           lines.push('')
         })
         streamOutput(lines)
@@ -182,13 +200,23 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
       }
 
       case 'experience': {
-        const lines = ['', '<span class="font-bold">PROFESSIONAL EXPERIENCE</span>', '']
+        const lines = ['', '<span class="font-bold">01 // WORK &amp; RESEARCH EXPERIENCE</span>', '']
         portfolio.experience.forEach(e => {
           lines.push(`  <span class="text-text-dim">[ ${e.dateRange} ]</span>`)
           lines.push(`  <span class="font-bold text-accent-green">${e.role}</span> @ <span class="font-bold">${e.company}</span>`)
           lines.push(`    ${e.description}`)
           lines.push('')
         })
+        if (portfolio.leadership && portfolio.leadership.length > 0) {
+          lines.push('<span class="font-bold">02 // CLUBS &amp; COMMUNITY LEADERSHIP</span>')
+          lines.push('')
+          portfolio.leadership.forEach(l => {
+            lines.push(`  <span class="text-text-dim">[ ${l.dateRange} ]</span>`)
+            lines.push(`  <span class="font-bold text-amber">${l.role}</span> @ <span class="font-bold">${l.company}</span>`)
+            lines.push(`    ${l.description}`)
+            lines.push('')
+          })
+        }
         streamOutput(lines)
         break
       }
@@ -199,6 +227,7 @@ export function useTerminal({ exitTerminal, onBootComplete }) {
           '<span class="font-bold">INQUIRY & CONTACT PROTOCOL</span>',
           '',
           `  Email:    <span class="text-accent-green">${portfolio.contact.email}</span>`,
+          `  Domain:   <span class="text-accent-green">${portfolio.contact.domain}</span>`,
           `  GitHub:   <span class="text-accent-green">${portfolio.contact.github}</span>`,
           `  LinkedIn: <span class="text-accent-green">${portfolio.contact.linkedin}</span>`,
           `  Resume:   <span class="text-accent-green">${portfolio.contact.cv}</span>`,

@@ -27,3 +27,4 @@ yarn-error.log*
 portfolio-build-spec.docx
 .vercel
 .env*
+.openchamber/
