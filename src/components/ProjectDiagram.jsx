@@ -461,9 +461,136 @@ function BeaconDiagram({ isHovered }) {
   )
 }
 
+// ── Diagram: RAVEN ──────────────────────────────────────────────────────────
+// [TOOL-USING AGENT] ──> [LANGGRAPH ORCHESTRATOR] ──> [RED-TEAMING ENGINE]
+//                               │                              │
+//                      [RAVEN-GUARD GATEWAY]          [BENIGN REGRESSION TESTS]
+//                      (Fail-Closed Tool Auth)                 │
+//                               │                              ▼
+//               [MCP SERVER] ───┴───────────────> [SARIF 2.1.0 AUDIT GATE]
+function RavenDiagram({ isHovered }) {
+  return (
+    <svg viewBox="0 0 390 195" className="w-full h-full" shapeRendering="geometricPrecision" textRendering="geometricPrecision">
+      {/* Row 1 Nodes */}
+      <Node x={6}   y={18} w={76}  h={28} label="AI AGENT" sub="Tool-Using LLM" />
+      <Node x={104} y={18} w={86}  h={28} label="LANGGRAPH" sub="Orchestrator" active />
+      <Node x={212} y={18} w={86}  h={28} label="RED-TEAMING" sub="Prompt Injection" amber />
+      <Node x={320} y={18} w={64}  h={28} label="SARIF 2.1" sub="OASIS Spec" active />
+
+      {/* Row 1 Edges */}
+      <Edge x1={82}  y1={32} x2={98}  y2={32} isHovered={isHovered} delay={0} />
+      <ArrowR x={104} y={32} isHovered={isHovered} delay={0} />
+
+      <Edge x1={190} y1={32} x2={206} y2={32} isHovered={isHovered} delay={0.1} active />
+      <ArrowR x={212} y={32} isHovered={isHovered} delay={0.1} active />
+
+      <Edge x1={298} y1={32} x2={314} y2={32} isHovered={isHovered} delay={0.15} amber />
+      <ArrowR x={320} y={32} isHovered={isHovered} delay={0.15} amber />
+
+      {/* Row 2: Security & Gateway Boundary */}
+      <BoundaryBox x={6} y={68} w={378} h={52} label="FAIL-CLOSED VERIFICATION & GATEWAY" amber />
+
+      <Node x={18}  y={80} w={86}  h={28} label="MCP PROTOCOL" sub="Model Context" />
+      <Node x={126} y={80} w={106} h={28} label="RAVEN-GUARD" sub="Tool Authorization" active />
+      <Node x={254} y={80} w={116} h={28} label="REGRESSION ENGINE" sub="Deterministic Proofs" amber />
+
+      {/* Connect LangGraph down to Raven-Guard */}
+      <Edge x1={147} y1={46} x2={147} y2={74} isHovered={isHovered} delay={0.2} active />
+      <ArrowD x={147} y={80} isHovered={isHovered} delay={0.2} active />
+
+      {/* Connect Red-Teaming down to Regression Engine */}
+      <Edge x1={255} y1={46} x2={255} y2={74} isHovered={isHovered} delay={0.25} amber />
+      <ArrowD x={255} y={80} isHovered={isHovered} delay={0.25} amber />
+
+      {/* Connect MCP to Raven-Guard */}
+      <Edge x1={104} y1={94} x2={120} y2={94} isHovered={isHovered} delay={0.3} />
+      <ArrowR x={126} y={94} isHovered={isHovered} delay={0.3} />
+
+      {/* Row 3 Nodes */}
+      <Node x={24}  y={148} w={100} h={28} label="PARAM VALIDATION" sub="Schema Check" />
+      <Node x={146} y={148} w={98}  h={28} label="AUDIT LOGS" sub="Tamper-Evident" active />
+      <Node x={266} y={148} w={108} h={28} label="CI/CD GATES" sub="PyPI / 293+ Tests" active />
+
+      {/* Raven Guard down to Param Validation and Audit */}
+      <Edge x1={179} y1={108} x2={179} y2={128} isHovered={isHovered} delay={0.35} active />
+      <PolyEdge points="179,128 74,128 74,142" isHovered={isHovered} delay={0.4} />
+      <ArrowD x={74} y={148} isHovered={isHovered} delay={0.4} />
+
+      <PolyEdge points="179,128 195,128 195,142" isHovered={isHovered} delay={0.42} active />
+      <ArrowD x={195} y={148} isHovered={isHovered} delay={0.42} active />
+
+      {/* Regression engine to CI/CD */}
+      <Edge x1={312} y1={108} x2={312} y2={142} isHovered={isHovered} delay={0.45} active />
+      <ArrowD x={312} y={148} isHovered={isHovered} delay={0.45} active />
+
+      <Note x={195} y={188} text="AI agent guardrail & regression engine · PyPI published · 293+ tests" />
+    </svg>
+  )
+}
+
+// ── Diagram: SIREN ──────────────────────────────────────────────────────────
+// [SENTINEL-1 SAR] ──> [SAR CALIBRATION] ──> [WATER SEGMENTATION] ──> [HAZARD FUSION]
+//                                                    │
+// [DEM TERRAIN] ──────> [D8 FLOW ROUTING] ───────────┴──────────────> [SHA-256 AUDIT]
+//                                                                             │
+//                                                                             ▼
+//                              [MAPLIBRE GL + FASTAPI TACTICAL DISPATCH]
+function SirenDiagram({ isHovered }) {
+  return (
+    <svg viewBox="0 0 390 195" className="w-full h-full" shapeRendering="geometricPrecision" textRendering="geometricPrecision">
+      {/* Row 1 Nodes (Satellite Track) */}
+      <Node x={6}   y={18} w={84}  h={28} label="SENTINEL-1 SAR" sub="Radar Telemetry" active />
+      <Node x={108} y={18} w={80}  h={28} label="CALIBRATION" sub="Terrain Radiometric" />
+      <Node x={206} y={18} w={88}  h={28} label="WATER CHANGE" sub="Adaptive Segment" active />
+      <Node x={312} y={18} w={72}  h={28} label="GLOF RISK" sub="Lake Outburst" red />
+
+      {/* Row 1 Edges */}
+      <Edge x1={90}  y1={32} x2={102} y2={32} isHovered={isHovered} delay={0} active />
+      <ArrowR x={108} y={32} isHovered={isHovered} delay={0} active />
+
+      <Edge x1={188} y1={32} x2={200} y2={32} isHovered={isHovered} delay={0.1} />
+      <ArrowR x={206} y={32} isHovered={isHovered} delay={0.1} />
+
+      <Edge x1={294} y1={32} x2={306} y2={32} isHovered={isHovered} delay={0.15} active />
+      <ArrowR x={312} y={32} isHovered={isHovered} delay={0.15} active />
+
+      {/* Row 2 Nodes (Hydrologic & Audit Track) */}
+      <Node x={6}   y={80} w={84}  h={28} label="DEM TERRAIN" sub="Elevation Grid" />
+      <Node x={108} y={80} w={80}  h={28} label="D8 ROUTING" sub="pysheds Solver" active />
+      <Node x={206} y={80} w={88}  h={28} label="PATH FORECAST" sub="Downstream Threat" amber />
+      <Node x={312} y={80} w={72}  h={28} label="AUDIT CHAIN" sub="SHA-256 Block" active />
+
+      {/* Row 2 Edges */}
+      <Edge x1={90}  y1={94} x2={102} y2={94} isHovered={isHovered} delay={0.2} />
+      <ArrowR x={108} y={94} isHovered={isHovered} delay={0.2} />
+
+      <Edge x1={188} y1={94} x2={200} y2={94} isHovered={isHovered} delay={0.25} active />
+      <ArrowR x={206} y={94} isHovered={isHovered} delay={0.25} active />
+
+      <Edge x1={294} y1={94} x2={306} y2={94} isHovered={isHovered} delay={0.3} amber />
+      <ArrowR x={312} y={94} isHovered={isHovered} delay={0.3} amber />
+
+      {/* Vertical cross-talk from GLOF Risk to Audit Chain */}
+      <Edge x1={348} y1={46} x2={348} y2={74} isHovered={isHovered} delay={0.35} red />
+      <ArrowD x={348} y={80} isHovered={isHovered} delay={0.35} red />
+
+      {/* Row 3 Tactical Dispatch */}
+      <Node x={50} y={144} w={290} h={28} label="MAPLIBRE GL + FASTAPI DISPATCH" sub="Human-In-The-Loop Disaster Early Warning" active />
+
+      <Edge x1={348} y1={108} x2={348} y2={126} isHovered={isHovered} delay={0.4} active />
+      <PolyEdge points="348,126 195,126 195,138" isHovered={isHovered} delay={0.45} active />
+      <ArrowD x={195} y={144} isHovered={isHovered} delay={0.48} active />
+
+      <Note x={195} y={188} text="multimodal satellite radar pipeline · Dudh Koshi / Imja basin · verified alerting" />
+    </svg>
+  )
+}
+
 // ── Dispatcher ─────────────────────────────────────────────────────────────
 const MAP = {
+  RAVEN:           RavenDiagram,
   MIRAGEPOT:       MiragepotDiagram,
+  SIREN:           SirenDiagram,
   AEGISIMAGE:      AegisimageDiagram,
   VULNTRACKER:     VulntrackerDiagram,
   MED_SECURE_MIND: MedSecureMindDiagram,
@@ -475,3 +602,4 @@ export function ProjectDiagram({ name, isHovered }) {
   if (!Diagram) return null
   return <Diagram isHovered={isHovered} />
 }
+
