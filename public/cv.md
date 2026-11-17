@@ -1,99 +1,70 @@
 # EVIN BRIJESH
 
-**CS Engineer & Systems Builder**
-
-evinbrijesh@gmail.com | [github.com/evinbrijesh](https://github.com/evinbrijesh) | [linkedin.com/in/evinbrijesh](https://linkedin.com/in/evinbrijesh) | +91 70124 87465
+(+91) 70124 87465 | evinbrijesh@gmail.com | [linkedin.com/in/evinbrijesh](https://linkedin.com/in/evinbrijesh) | [github.com/evinbrijesh](https://github.com/evinbrijesh) | [evinbrijesh.is-a.dev](https://evinbrijesh.is-a.dev)
 
 ---
 
-## SUMMARY
+## ABOUT
 
-Final-year CS student at Mar Athanasius College of Engineering building security-critical systems and low-level infrastructure. Expertise in AI-powered honeypots, vulnerability tracking, and secure embedded firmware. Security mindset integrated into every project — from PII isolation to MITRE ATT&CK detection. CTF competitor, QMK firmware engineer, and systems tinkerer.
-
----
-
-## TECHNICAL SKILLS
-
-**Systems & Dev**
-Python, C / C++, JavaScript, React.js, Flask, Docker, Ollama / LLMs, PostgreSQL, Git, Linux (Arch)
-
-**Observability & Infra**
-Prometheus, Grafana, Nginx, Streamlit, CI/CD
-
-**Hardware & Low-Level**
-Arduino, QMK / Vial Firmware, Custom Keyboards, Hyprland / Wayland, Neovim / Vim, Wireshark, Burp Suite
-
----
-
-## PROJECTS
-
-### MIRAGEPOT | Security / AI Systems | 2025
-[github.com/evinbrijesh/MiragePot](https://github.com/evinbrijesh/MiragePot)
-
-A real-time, high-interaction SSH honeypot that uses generative AI to eliminate fingerprinting. Paramiko SSH server with a three-tier command engine — filesystem handler, static cache, and an Ollama LLM fallback. Detects MITRE ATT&CK TTPs across 11 tactic stages, tarpits attackers, injects per-session honeytoken data. Full observability via Prometheus, Grafana, and Streamlit. 566 pytest tests at 100% pass rate.
-
-- Architected LLM-driven response generation to defeat SSH fingerprinting attacks
-- Implemented MITRE ATT&CK classification engine across 11 tactic stages
-- Built Prometheus instrumentation for real-time threat metrics
-- Designed per-session honeytoken injection for attacker attribution
-
-**Technologies:** Python, Docker, Ollama, Paramiko, Prometheus, Grafana, Streamlit
-
-### VULNTRACKER | Security / Web | 2025
-[github.com/evinbrijesh](https://github.com/evinbrijesh)
-
-A vulnerability and threat tracking platform with automated CVE ingestion via the NVD API, CVSS v3.1 scoring, and patch management workflows. React frontend with Flask backend and Supabase for real-time status tracking, remediation timelines, and risk prioritization across systems.
-
-- Automated CVE ingestion pipeline from NVD with CVSS v3.1 scoring
-- Built patch management workflow with remediation timelines
-- Implemented risk prioritization algorithm across heterogeneous system types
-- Real-time data synchronization via Supabase
-
-**Technologies:** React, Flask, Supabase
-
-### BEACON | Mobile / Social Impact | 2025
-[github.com/evinbrijesh](https://github.com/evinbrijesh)
-
-A challenge-based mobile app supporting addiction recovery through milestone tracking and motivational streaks. Firebase-backed with strict Security Rules isolating user PII, push notifications, and a daily challenge system designed to build healthy habits incrementally.
-
-- Designed Firebase Security Rules isolating user PII with least-privilege access
-- Built daily challenge system with streak tracking and motivational gamification
-- Implemented push notifications for milestone achievement
-- Security-first data architecture from inception
-
-**Technologies:** FlutterFlow, Firebase, JavaScript
-
----
-
-## EXPERIENCE
-
-### Hardware & Networking Technician
-**Cirus Computers, Kothamangalam** | May 2023 — Sep 2023
-
-- Engineered high-performance workstations for specialized workloads with component selection and optimization
-- Implemented secure network topologies (VLANs, firewalls) for local deployments
-- Diagnosed hardware faults across diverse system architectures using diagnostic tools and system testing
-- Configured small-scale LAN/Wi-Fi infrastructures with IP management, access control, and basic firewall rules
+Final-year Computer Science student and cybersecurity research intern focused on building secure, reliable AI-enabled systems. Experienced in developing AI-agent security tooling, adaptive SSH honeypots, and adversarial ML pipelines, with hands-on work across Python, Java, Linux, Docker, testing, observability, and CI/CD. Interested in translating research prototypes into maintainable, customer-focused enterprise solutions.
 
 ---
 
 ## EDUCATION
 
-**Mar Athanasius College of Engineering, Kothamangalam**
-B.Tech in Computer Science (Final Year)
+**Mar Athanasius College of Engineering**, Kothamangalam, Kerala  
+*B.Tech in Computer Science and Engineering (CGPA: 7.88/10)* | Sep 2023 – June 2027  
+– **Relevant Coursework:** Data Structures, Operating Systems, DBMS, Computer Networks, Compiler Design
 
 ---
 
-## CERTIFICATIONS & ACHIEVEMENTS
+## TECHNICAL SKILLS
 
-- CTF Competitor — Active participation in capture-the-flag competitions
-- QMK Firmware Developer — Custom keyboard firmware design and implementation
-- Linux Power User — Arch Linux, Hyprland, Neovim setup and optimization
+- **Languages:** Python, Java, C, JavaScript, SQL, Bash
+- **ML / AI:** PyTorch, scikit-learn, SHAP, LangGraph, Ollama
+- **Frameworks & Libraries:** React.js, Flask, FastAPI, TailwindCSS, Paramiko, pytest
+- **Infra / Data:** Docker, Neo4j, PostgreSQL, Prometheus, Grafana, Git, Linux
 
 ---
 
-## CORE PHILOSOPHY
+## WORK EXPERIENCE
 
-> I build things that are reliable, observable, and a little bit dangerous.
+### Cybersecurity Research Intern | 2026
+**IIIT Kottayam**, Kottayam, Kerala  
+- Researched methods to detect and prevent image laundering in AI/diffusion-generated content, building a UAP-based adversarial perturbation pipeline.
+- Identified and patched six critical pipeline vulnerabilities (mixed-precision loss instability, checkpoint recovery, out-of-distribution evaluation split, adaptive attacker threat modeling), improving training reliability and evaluation validity.
 
-Security mindset is not an afterthought — it's built in. From PII isolation in production apps to MITRE ATT&CK detection in honeypots, every line of code is written with threat modeling in mind.
+### Computer Hardware and Networking Technician | May 2023 – Sep 2023
+**Cirus Computers**, Kothamangalam, Kerala  
+- Diagnosed hardware bottlenecks and resolved thermal failures across custom desktop builds; configured small-scale LANs/Wi-Fi networks including IP addressing, subnetting, and firewall rules.
+
+---
+
+## FEATURED PROJECTS
+
+### RAVEN – AI Agent Security Regression & Guardrail Engine | 2026
+*Python, LangGraph, FastAPI, MCP | [GitHub](https://github.com/evinbrijesh/RAVEN)*  
+- Built a closed-loop security platform for tool-using AI agents that discovers prompt-injection and tool-misuse vulnerabilities, proposes mitigations, and verifies fixes through security and benign-utility regression tests.
+- Implemented LangGraph orchestration, MCP integration, human approval, SARIF reporting, and the fail-closed `raven-guard` gateway for tool authorization, parameter validation, audit logging, and CI/CD security gates.
+
+### MiragePot – Adaptive AI SSH Honeypot | 2026
+*Python, Paramiko, Ollama, Docker | [GitHub](https://github.com/evinbrijesh/MiragePot)*  
+- Built an LLM-assisted SSH honeypot that emulates an interactive Linux-like terminal without executing attacker commands on the host; implemented with Paramiko, Phi-3 via Ollama, and a stateful virtual filesystem.
+- Added command normalization, honeytokens, tarpitting, signature-based MITRE ATT&CK mapping, session forensics, and Prometheus/Grafana monitoring; deployed with Docker Compose.
+
+### SIREN – Satellite-Informed Risk & Emergency Network | 2026
+*Python, Sentinel-1 SAR, rasterio, pysheds | [GitHub](https://github.com/evinbrijesh/SIREN)*  
+- Built a human-in-the-loop disaster-monitoring prototype for glacial lake outburst flood scenarios in Nepal’s Dudh Koshi/Imja basin using satellite, terrain, rainfall, and infrastructure data.
+- Implemented SAR calibration, weather-adaptive optical/SAR processing, deterministic water-change analysis, D8 flow routing, compact alert encoding, and SHA-256 hash-chained audit logging before approved dispatch.
+
+---
+
+## LEADERSHIP & ACHIEVEMENTS
+
+### Vice Chair, Computer Society | Mar 2025 – Present
+**IEEE Student Branch, MACE**, Kothamangalam, Kerala  
+- Represented the Computer Society at IEEE Yess’25, TechXbit, NIT Calicut; Volunteered for .hack()’25 - handled venue setup, technical coordination, and programme execution.
+
+### Program Committee Executive Member | Sep 2025 – Present
+**GDGoC MACE**, Kothamangalam, Kerala  
+- Event Lead, Lumora’26 — planned and executed an 18-hour design hackathon, managing problem statements, participants, judges, and logistics end-to-end.

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { portfolio } from '../data/portfolio'
-import resumePDF from '../assets/evin_brijesh_resume.pdf'
+import resumePDF from '../assets/Evin_Brijesh_Nov.pdf'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 
 function Contact({ enterTerminal, isTransitioning }) {
