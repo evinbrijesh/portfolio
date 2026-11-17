@@ -57,10 +57,28 @@ function Hero() {
               <span>{portfolio.degree}</span>
             </div>
             <div>
+              <span className="text-accent-green mr-1.5">[ DOMAIN ]</span>
+              <a href={portfolio.contact.domain} target="_blank" rel="noreferrer" className="text-text-primary hover:text-accent-green underline decoration-accent-green/40">
+                evinbrijesh.is-a.dev
+              </a>
+            </div>
+            <div>
               <span className="text-accent-green mr-1.5">[ STATUS ]</span>
               <span>{portfolio.status === 'AVAILABLE FOR ROLES' ? 'ONLINE // READY' : portfolio.status}</span>
             </div>
           </div>
+
+          {/* Telemetry Proof Metric Bar */}
+          {portfolio.stats && (
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-[#484848]/20 font-mono">
+              {portfolio.stats.map((s) => (
+                <div key={s.label}>
+                  <div className="font-body text-2xl font-bold text-[#C6C7C5] tracking-tight">{s.value}</div>
+                  <div className="text-[10px] text-text-dim uppercase tracking-wider mt-0.5 leading-tight">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* CTA Section */}
           <a
