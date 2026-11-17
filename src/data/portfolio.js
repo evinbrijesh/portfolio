@@ -8,12 +8,6 @@ export const portfolio = {
   degree: 'B.Tech CSE @ MACE (\'27)',
   status: 'AVAILABLE FOR ROLES',
 
-  stats: [
-    { value: '1,200+', label: 'Automated Tests Passed' },
-    { value: '2',      label: 'Published PyPI Packages' },
-    { value: '50',     label: 'MITRE ATT&CK Techniques Mapped' },
-    { value: '7.88',   label: 'CGPA @ MACE (B.Tech CSE)' },
-  ],
 
   about: {
     quote: 'Engineering closed-loop agent security, adaptive honeypots, and resilient decision systems.',

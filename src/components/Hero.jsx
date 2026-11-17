@@ -68,18 +68,6 @@ function Hero() {
             </div>
           </div>
 
-          {/* Telemetry Proof Metric Bar */}
-          {portfolio.stats && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-[#484848]/20 font-mono">
-              {portfolio.stats.map((s) => (
-                <div key={s.label}>
-                  <div className="font-body text-2xl font-bold text-[#C6C7C5] tracking-tight">{s.value}</div>
-                  <div className="text-[10px] text-text-dim uppercase tracking-wider mt-0.5 leading-tight">{s.label}</div>
-                </div>
-              ))}
-            </div>
-          )}
-
           {/* CTA Section */}
           <a
             href="#projects"
