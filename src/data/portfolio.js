@@ -13,7 +13,7 @@ export const portfolio = {
     quote: 'Engineering closed-loop agent security, adaptive honeypots, and resilient decision systems.',
     bio: 'Final-year Computer Science student at Mar Athanasius College of Engineering and cybersecurity research intern. Focused on AI-agent security tooling, adaptive SSH honeypots, and adversarial ML pipelines, with hands-on work across Python, Linux, Docker, testing, and observability.',
     currently: {
-      building:      'KelviAI',
+      building:      'KelviAI — Multilingual Voice Agent Framework',
       buildProject:  'KELVIAI',
       reading:       'The Power of Habit — Charles Duhigg',
       listening:     '"I Really Want to Stay at Your House" — Rosa Walton',
