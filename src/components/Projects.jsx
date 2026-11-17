@@ -3,7 +3,7 @@ import { portfolio } from '../data/portfolio'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { ProjectDiagram } from './ProjectDiagram'
 
-const CATEGORIES = ['ALL', 'SECURITY', 'AI / ML', 'WEB & CLOUD', 'MOBILE']
+const CATEGORIES = ['ALL', 'SECURITY', 'AI / ML', 'GEOSPATIAL']
 
 // ── Single project card ────────────────────────────────────────────────────
 function ProjectCard({ project, index, hoveredSkill, setHoveredSkill }) {
@@ -19,7 +19,6 @@ function ProjectCard({ project, index, hoveredSkill, setHoveredSkill }) {
   }
 
   const isProjectSkillMatch = project.tags.some(isTagMatch)
-
   const isCardActive = hovered || isProjectSkillMatch
 
   const handleTagTap = (tag) => {
@@ -56,13 +55,24 @@ function ProjectCard({ project, index, hoveredSkill, setHoveredSkill }) {
             : 'rgba(118,170,131,0.35)'
           : 'rgba(42,42,42,1)',
       }}
-      className="grid grid-cols-1 lg:grid-cols-2 border rounded-sm overflow-hidden"
+      className="grid grid-cols-1 lg:grid-cols-2 border rounded-sm overflow-hidden bg-[#131313]/90"
     >
-      {/* ── LEFT: Architecture diagram ── */}
-      <div className="relative bg-surface-low border-b lg:border-b-0 lg:border-r border-[#2A2A2A] flex items-center justify-center p-6 min-h-[200px] lg:min-h-[240px]">
-        {/* HUD corner ticks */}
-        <span className="absolute top-0 left-0  w-3 h-3 border-t border-l border-accent-green/20 pointer-events-none" />
-        <span className="absolute top-0 right-0 w-3 h-3 border-t border-r border-accent-green/20 pointer-events-none" />
+      {/* ── LEFT: Custom Interactive SVG Architecture Diagram ── */}
+      <div
+        className="relative bg-surface-low/60 flex items-center justify-center p-6 lg:p-8 min-h-[220px] lg:min-h-[260px] border-b lg:border-b-0 lg:border-r border-[#2A2A2A] overflow-hidden"
+      >
+        {/* Subtle grid background texture */}
+        <div
+          className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(circle, #76AA83 1px, transparent 1px)',
+            backgroundSize:  '16px 16px',
+          }}
+        />
+
+        {/* Corner marks */}
+        <span className="absolute top-0 left-0   w-3 h-3 border-t border-l border-accent-green/20 pointer-events-none" />
+        <span className="absolute top-0 right-0  w-3 h-3 border-t border-r border-accent-green/20 pointer-events-none" />
         <span className="absolute bottom-0 left-0  w-3 h-3 border-b border-l border-accent-green/20 pointer-events-none" />
         <span className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-accent-green/20 pointer-events-none" />
 
@@ -74,15 +84,22 @@ function ProjectCard({ project, index, hoveredSkill, setHoveredSkill }) {
       {/* ── RIGHT: Content ── */}
       <div className="flex flex-col justify-between p-8 lg:p-10">
         <div>
-          {/* Index + category */}
-          <span className="font-headline text-[0.625rem] uppercase tracking-[0.4em] text-accent-green mb-4 flex items-center justify-between">
-            <span>{String(index + 1).padStart(2, '0')} / {project.type}</span>
+          {/* Index + Category + Stamp */}
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <span className="font-headline text-[0.625rem] uppercase tracking-[0.4em] text-accent-green">
+              {String(index + 1).padStart(2, '0')} / {project.type}
+            </span>
+            {project.stamp && (
+              <span className="px-2 py-0.5 border border-accent-green/40 text-accent-green text-[9px] font-mono tracking-widest rounded-sm uppercase">
+                {project.stamp}
+              </span>
+            )}
             {isProjectSkillMatch && (
               <span className="text-amber font-mono text-[9px] tracking-widest animate-pulse-dot">
                 [ MATCH: {hoveredSkill.toUpperCase()} ]
               </span>
             )}
-          </span>
+          </div>
 
           {/* Project name */}
           <h3
@@ -127,8 +144,8 @@ function ProjectCard({ project, index, hoveredSkill, setHoveredSkill }) {
         <div className="flex items-center justify-between mt-6 pt-5 border-t border-[#2A2A2A]">
           <div className="font-headline text-[0.625rem] tracking-widest text-text-dim flex items-center gap-3">
             <span>{project.year}</span>
-            {project.status === 'ONGOING' && (
-              <span className="text-accent-green">[ ONGOING ]</span>
+            {project.badge && (
+              <span className="text-accent-green font-mono text-[9px]">[ {project.badge} ]</span>
             )}
           </div>
 
@@ -139,12 +156,10 @@ function ProjectCard({ project, index, hoveredSkill, setHoveredSkill }) {
               rel="noopener noreferrer"
               className="group flex items-center gap-2 font-headline text-[0.625rem] uppercase tracking-[0.3em] text-text-dim hover:text-accent-green transition-colors duration-300"
             >
-              <span>VIEW</span>
-              <svg className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                   fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M7 17L17 7M17 7H7M17 7V17" />
-              </svg>
+              <span>SOURCE_CODE</span>
+              <span className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
+                ↗
+              </span>
             </a>
           )}
         </div>
@@ -156,6 +171,7 @@ function ProjectCard({ project, index, hoveredSkill, setHoveredSkill }) {
 // ── Section ────────────────────────────────────────────────────────────────
 function Projects({ hoveredSkill, setHoveredSkill }) {
   const [activeCategory, setActiveCategory] = useState('ALL')
+  const [showArchive, setShowArchive] = useState(false)
   const ref = useScrollReveal(0.05)
 
   // Filter projects by category
@@ -164,8 +180,7 @@ function Projects({ hoveredSkill, setHoveredSkill }) {
     const type = project.type.toUpperCase()
     if (activeCategory === 'SECURITY') return type.includes('SECURITY')
     if (activeCategory === 'AI / ML') return type.includes('AI') || type.includes('ML')
-    if (activeCategory === 'WEB & CLOUD') return type.includes('WEB') || type.includes('CLOUD')
-    if (activeCategory === 'MOBILE') return type.includes('MOBILE')
+    if (activeCategory === 'GEOSPATIAL') return type.includes('GEOSPATIAL')
     return true
   })
 
@@ -188,10 +203,10 @@ function Projects({ hoveredSkill, setHoveredSkill }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <span className="block font-headline text-[0.625rem] uppercase tracking-[0.4em] text-accent-green mb-3">
-              PORTFOLIO
+              FEATURED CASES
             </span>
             <h2 className="font-headline text-4xl font-bold tracking-tighter text-text-primary">
-              TECHNICAL_WORKS
+              PRIMARY_SYSTEMS
             </h2>
           </div>
 
@@ -214,7 +229,7 @@ function Projects({ hoveredSkill, setHoveredSkill }) {
         </div>
 
         {/* Cards */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
           {filteredProjects.map((project, index) => (
             <ProjectCard
               key={project.name}
@@ -225,6 +240,69 @@ function Projects({ hoveredSkill, setHoveredSkill }) {
             />
           ))}
         </div>
+
+        {/* ── Secondary / Archived Works Drawer ── */}
+        {portfolio.archive && portfolio.archive.length > 0 && (
+          <div className="mt-12 border border-[#2A2A2A] rounded-sm bg-[#131313]/50 p-6 md:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#2A2A2A]">
+              <div>
+                <span className="font-headline text-[0.625rem] uppercase tracking-[0.3em] text-accent-green block mb-1">
+                  SECONDARY CATALOG
+                </span>
+                <h3 className="font-headline text-lg font-bold text-text-primary tracking-tight">
+                  ARCHIVED_&amp;_SPECIALIZED_WORKS
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowArchive(!showArchive)}
+                className="self-start sm:self-auto px-4 py-2 border border-[#383838] hover:border-accent-green text-xs font-mono text-text-muted hover:text-accent-green rounded-sm transition-colors duration-200"
+              >
+                {showArchive ? '[-] COLLAPSE CATALOG' : `[+] EXPAND CATALOG (${portfolio.archive.length} WORKS)`}
+              </button>
+            </div>
+
+            {showArchive && (
+              <div className="divide-y divide-[#2A2A2A] mt-2 animate-term-in">
+                {portfolio.archive.map((item) => (
+                  <div key={item.name} className="py-5 flex flex-col md:flex-row md:items-start justify-between gap-4">
+                    <div className="space-y-1.5 flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <span className="font-headline font-bold text-base text-text-primary">
+                          {item.name}
+                        </span>
+                        <span className="text-text-dim font-mono text-xs">({item.year})</span>
+                        <span className="px-2 py-0.5 bg-surface-high border border-[#383838] text-[9px] font-mono text-accent-green rounded-sm uppercase tracking-wider">
+                          {item.stamp}
+                        </span>
+                      </div>
+                      <p className="font-body text-xs text-text-muted leading-relaxed max-w-3xl">
+                        {item.description}
+                      </p>
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {item.tags.map(t => (
+                          <span key={t} className="text-[10px] font-mono text-text-dim bg-surface-low px-1.5 py-0.5 rounded-sm border border-[#252525]">
+                            #{t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    {item.url && (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="self-start md:self-center font-mono text-xs text-text-dim hover:text-accent-green transition-colors flex items-center gap-1.5 shrink-0 px-3 py-1 border border-[#2A2A2A] rounded-sm hover:border-accent-green/40"
+                      >
+                        <span>[ REPO ]</span>
+                        <span>↗</span>
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   )
