@@ -3,107 +3,181 @@
 
 export const portfolio = {
   name: 'EVIN BRIJESH',
-  tagline: 'cs engineer & systems builder — security, AI, and low-level things.',
+  tagline: 'cs engineer & systems builder — AI agent security, adaptive honeypots, and resilient architectures.',
   location: 'Kothamangalam, IN',
-  degree: 'B.Tech CSE @ MACE',
+  degree: 'B.Tech CSE @ MACE (\'27)',
   status: 'AVAILABLE FOR ROLES',
 
+  stats: [
+    { value: '1,200+', label: 'Automated Tests Passed' },
+    { value: '2',      label: 'Published PyPI Packages' },
+    { value: '50',     label: 'MITRE ATT&CK Techniques Mapped' },
+    { value: '7.88',   label: 'CGPA @ MACE (B.Tech CSE)' },
+  ],
+
   about: {
-    quote: 'Engineering at the intersection of systems programming and security research.',
-    bio: 'Final-year CSE student at Mar Athanasius College of Engineering. Focused on security tooling, custom firmware, CTF competitions, and the intersection of security research, AI systems, and low-level engineering.',
+    quote: 'Engineering closed-loop agent security, adaptive honeypots, and resilient decision systems.',
+    bio: 'Final-year Computer Science student at Mar Athanasius College of Engineering and cybersecurity research intern. Focused on AI-agent security tooling, adaptive SSH honeypots, and adversarial ML pipelines, with hands-on work across Python, Linux, Docker, testing, and observability.',
     currently: {
-      building:      'AegisImage — Adversarial ML for Image Protection',
-      buildProject:  'AEGISIMAGE', // drives the dynamic progress-bar label
+      building:      'RAVEN & MiragePot Security Infrastructure',
+      buildProject:  'RAVEN',
       reading:       'The Art of Exploitation — Jon Erickson',
       listening:     'Bring Me The Horizon',
-      buildProgress: null, // null = hide progress bar (ongoing research); set a number to show it
+      buildProgress: null,
     }
   },
 
   skills: [
     {
-      category: 'Systems & Dev',
-      items: ['Python', 'C/C++', 'JavaScript', 'TypeScript', 'React.js', 'Flask', 'Docker', 'Ollama/LLMs', 'PostgreSQL', 'Git', 'Linux (Arch)']
+      category: 'AI & Agent Security',
+      items: ['LangGraph', 'MCP Protocol', 'SARIF 2.1.0', 'OWASP LLM Top 10', 'PyTorch', 'scikit-learn', 'SHAP', 'Ollama/LLMs']
     },
     {
-      category: 'Observability & Infra',
-      items: ['Prometheus', 'Grafana', 'Nginx', 'Streamlit', 'CI/CD']
+      category: 'Systems & Backend',
+      items: ['Python', 'FastAPI', 'Flask', 'Paramiko', 'pytest', 'Docker', 'PostgreSQL', 'Neo4j', 'Linux (Arch)', 'Git', 'Bash', 'Java']
     },
     {
-      category: 'Hardware & Low-Level',
-      items: ['Arduino', 'QMK/Vial Firmware', 'Custom Keyboards', 'Hyprland/Wayland', 'Neovim/Vim', 'Wireshark', 'Burp Suite']
+      category: 'Observability & Geospatial',
+      items: ['Prometheus', 'Grafana', 'Sentinel-1 SAR', 'rasterio / pysheds', 'MapLibre GL', 'React.js', 'TailwindCSS', 'CI/CD']
     },
   ],
 
+  // ── 3 PRIMARY FLAGSHIP CASES ───────────────────────────────────────────────
   projects: [
     {
-      name:        'MIRAGEPOT',
-      year:        '2025',
-      type:        'SECURITY / AI SYSTEMS',
+      name:        'RAVEN',
+      year:        '2026',
+      type:        'AI AGENT SECURITY / GUARDRAILS',
+      stamp:       'SECURITY TOOL · PyPI',
       status:      'COMPLETE',
-      description: 'A real-time, high-interaction SSH honeypot using generative AI to eliminate fingerprinting. Paramiko-based with a three-tier command engine (filesystem handler → static cache → Ollama LLM fallback). Detects 50 MITRE ATT&CK techniques across 11 tactics, tarpits attackers, and injects 10 types of per-session honeytokens across a 154-entry virtual filesystem. Resists 88 known prompt injection patterns. ~15,000 lines of Python across 18 modules. Full observability via Prometheus, Grafana, Streamlit. 566 pytest tests, 100% pass rate.',
-      tags:        ['Python', 'Docker', 'Ollama', 'Paramiko', 'Prometheus', 'Grafana'],
+      badge:       'PyPI v1.0.0 · SARIF 2.1.0',
+      description: 'A closed-loop security platform for tool-using AI agents that discovers prompt-injection and tool-misuse vulnerabilities, proposes mitigations, and verifies fixes through security and benign-utility regression tests. Implemented with LangGraph orchestration, Model Context Protocol (MCP) integration, human approval, SARIF reporting, and the fail-closed raven-guard gateway for tool authorization, parameter validation, audit logging, and CI/CD security gates. 293+ tests, 2 PyPI packages published.',
+      tags:        ['Python', 'LangGraph', 'FastAPI', 'MCP Protocol', 'pytest', 'Docker', 'SARIF 2.1.0'],
+      url:         'https://github.com/evinbrijesh/RAVEN',
+    },
+    {
+      name:        'MIRAGEPOT',
+      year:        '2026',
+      type:        'DEFENSIVE SECURITY / AI',
+      stamp:       'DEFENSIVE SYSTEM',
+      status:      'COMPLETE',
+      badge:       '566 tests ✓ · MITRE ATT&CK',
+      description: 'An intelligent, LLM-assisted SSH honeypot that simulates a realistic Linux terminal without executing attacker commands on the host. Paramiko-based with a three-tier command engine (filesystem handler → static cache → Ollama Phi-3 fallback). Features command normalization, honeytokens, tarpitting, signature-based MITRE ATT&CK mapping across 11 tactics, session forensics, and Prometheus/Grafana monitoring. Containerized with Docker Compose; 15,000+ lines of Python, 566 tests at 100% pass rate.',
+      tags:        ['Python', 'Docker', 'Paramiko', 'Ollama/LLMs', 'Prometheus', 'Grafana', 'pytest'],
       url:         'https://github.com/evinbrijesh/MiragePot',
     },
     {
-      name:        'AEGISIMAGE',
+      name:        'SIREN',
       year:        '2026',
-      type:        'AI / ADVERSARIAL ML',
-      status:      'ONGOING',
-      description: 'Research project at IIIT Kottayam protecting images against AI manipulation. Uses a universal adversarial perturbation (UAP) approach across an ensemble of Stable Diffusion VAEs (1.5 / 2.1 / XL), trained with LPIPS perceptual loss and an Expectation-over-Transformation (EoT) framework so the protection survives real-world image transformations.',
-      tags:        ['PyTorch', 'Stable Diffusion', 'LPIPS', 'Adversarial ML'],
-      url:         null, // no repo yet — row renders without link until a public repo exists
+      type:        'GEOSPATIAL / EARLY WARNING',
+      stamp:       'GEOSPATIAL PLATFORM',
+      status:      'COMPLETE',
+      badge:       'Sentinel-1 SAR · SHA-256 Audit',
+      description: 'A human-in-the-loop satellite monitoring pipeline and early-warning decision platform for glacial lake outburst flood (GLOF) scenarios in Nepal’s Dudh Koshi/Imja basin using satellite, terrain, rainfall, and infrastructure data. Implemented SAR calibration, weather-adaptive optical/SAR processing, deterministic water-change analysis, D8 flow routing, compact alert encoding, and SHA-256 hash-chained audit logging before approved dispatch. Tactical MapLibre GL UI with FastAPI backend.',
+      tags:        ['Python', 'Sentinel-1 SAR', 'rasterio / pysheds', 'FastAPI', 'MapLibre GL', 'React.js'],
+      url:         'https://github.com/evinbrijesh/SIREN',
+    },
+  ],
+
+  // ── SECONDARY & ARCHIVED PROJECTS ─────────────────────────────────────────
+  archive: [
+    {
+      name:        'DRONA-LOG',
+      year:        '2026',
+      stamp:       'OPTIMIZATION SOLVER · SIH 2026',
+      description: 'Predictive logistics and terrain-aware resupply platform for high-altitude military formations. Built for Smart India Hackathon (SIH26251). Uses Google OR-Tools (SCIP MILP solver) for optimal convoy allocation, LightGBM for consumption forecasting, and MapLibre GL tactical map.',
+      tags:        ['Python', 'OR-Tools (MILP)', 'LightGBM', 'FastAPI', 'MapLibre GL', 'Docker'],
+      url:         'https://github.com/evinbrijesh/DRONA-LOG',
+    },
+    {
+      name:        'SENTRA',
+      year:        '2026',
+      stamp:       'GRAPH ML · BUILDATHON',
+      description: 'Coordinated fraud-ring detector for signup/referral abuse using graph neural networks. Trained PyTorch GNN + classical RandomForest over 16-dimensional graph community features with SHAP explainability values and plain-language audit trails.',
+      tags:        ['PyTorch (GNN)', 'RandomForest', 'SHAP', 'NetworkX', 'Python', 'FastAPI'],
+      url:         'https://github.com/evinbrijesh/SENTRA',
+    },
+    {
+      name:        'GHOSTRANGE',
+      year:        '2026',
+      stamp:       'SECURITY SIMULATION',
+      description: 'Defensive security-control validation platform. Simulates fictional cloud identity compromises, generates synthetic security telemetry, evaluates detection rules with deterministic logic, and enforces CI security gate thresholds.',
+      tags:        ['Python', 'Security Telemetry', 'CI Gates', 'Testing'],
+      url:         'https://github.com/evinbrijesh/GhostRange',
+    },
+    {
+      name:        'KELVIAI',
+      year:        '2026',
+      stamp:       'VOICE AI PROTOTYPE',
+      description: 'Sovereign Indian-language voice agent for multilingual healthcare appointments on the Gnani Artha Stack (Prisma STT → Evon LLM → Timbre TTS). Handles code-mixed Malayalam, Manglish, and Hinglish with sub-500ms local guardrails. 361 tests passed.',
+      tags:        ['Python', 'Speech AI', 'Telephony Guardrails', 'FastAPI', 'pytest'],
+      url:         'https://github.com/evinbrijesh/kelviAI',
     },
     {
       name:        'VULNTRACKER',
       year:        '2025',
-      type:        'SECURITY / WEB',
-      status:      'COMPLETE',
+      stamp:       'SECURITY / WEB',
       description: 'Vulnerability and threat tracking platform with automated CVE ingestion via NVD API, CVSS v3.1 scoring, RBAC, JWT auth, and patch management workflows.',
-      tags:        ['React', 'Flask', 'Supabase'],
+      tags:        ['React.js', 'Flask', 'Supabase', 'PostgreSQL'],
       url:         'https://github.com/evinbrijesh/VulnTracker',
     },
     {
       name:        'MED_SECURE_MIND',
       year:        '2025',
-      type:        'AI / HEALTHCARE',
-      status:      'COMPLETE',
-      description: 'Fully client-side mental health risk assessment tool. Runs Bio_ClinicalBERT entirely in-browser via WebGPU — no backend, no data leaves the device. Outputs a 0–100 risk score.',
-      tags:        ['React', 'TypeScript', 'Vite', 'WebGPU', 'Bio_ClinicalBERT'],
+      stamp:       'CLIENT-SIDE AI',
+      description: 'Client-side mental health risk assessment tool running Bio_ClinicalBERT in-browser via WebGPU with deterministic fallback — zero backend data leakage. Presented at IEEE Yess’25.',
+      tags:        ['React.js', 'TypeScript', 'WebGPU', 'Bio_ClinicalBERT'],
       url:         'https://github.com/evinbrijesh/med-secure-mind',
     },
     {
       name:        'BEACON',
       year:        '2025',
-      type:        'MOBILE / SOCIAL IMPACT',
-      status:      'COMPLETE',
-      description: 'Challenge-based mobile app supporting addiction recovery through milestone tracking and motivational streaks. Firebase-backed with strict Security Rules and least-privilege data modeling.',
-      tags:        ['FlutterFlow', 'Firebase', 'JavaScript'],
+      stamp:       'MOBILE / SOCIAL IMPACT',
+      description: 'Mobile companion app supporting addiction recovery through daily challenge milestones and streak mechanics with least-privilege Firestore Security Rules.',
+      tags:        ['Flutter', 'Firebase', 'JavaScript'],
       url:         'https://github.com/evinbrijesh/BEACON',
     },
   ],
 
+  // ── WORK & RESEARCH EXPERIENCE ─────────────────────────────────────────────
   experience: [
     {
-      dateRange:   'JUL 2026 — PRESENT',
+      dateRange:   '2026',
       role:        'Cybersecurity Research Intern',
       company:     'IIIT Kottayam',
-      description: 'Researching image forensics and AI-manipulated image detection — building AegisImage, an adversarial ML system for protecting images against diffusion-based manipulation.',
+      description: 'Researched methods to detect and prevent image laundering in AI/diffusion-generated content, building a UAP-based adversarial perturbation pipeline. Identified and patched six critical pipeline vulnerabilities (mixed-precision loss instability, checkpoint recovery, out-of-distribution evaluation split, adaptive attacker threat modeling), improving training reliability and evaluation validity.',
     },
     {
       dateRange:   'MAY 2023 — SEP 2023',
       role:        'Hardware & Networking Technician',
       company:     'Cirus Computers, Kothamangalam',
-      description: 'Built high-performance workstations, implemented secure VLAN/firewall topologies, diagnosed hardware faults, configured LAN/Wi-Fi infrastructure.',
+      description: 'Diagnosed hardware bottlenecks and resolved thermal failures across custom desktop builds; configured small-scale LANs/Wi-Fi networks including IP addressing, subnetting, and firewall rules.',
+    },
+  ],
+
+  // ── CLUBS & COMMUNITY LEADERSHIP ──────────────────────────────────────────
+  leadership: [
+    {
+      dateRange:   'MAR 2025 — PRESENT',
+      role:        'Vice Chair, Computer Society',
+      company:     'IEEE Student Branch, MACE',
+      description: 'Represented the Computer Society at IEEE Yess’25, TechXbit, NIT Calicut. Volunteered for .hack()’25 handling venue setup, technical coordination, and programme execution.',
+    },
+    {
+      dateRange:   'SEP 2025 — PRESENT',
+      role:        'Program Committee Executive Member',
+      company:     'GDGoC MACE',
+      description: 'Event Lead, Lumora’26 — planned and executed an 18-hour design hackathon, managing problem statements, participants, judges, and logistics end-to-end.',
     },
   ],
 
   contact: {
     label:   'INQUIRY PROTOCOL',
-    tagline: "Open to roles in Security Research, Backend Systems, or Applied ML. Let's build something resilient.",
+    tagline: "Open to roles in Security Engineering, AI Systems, or Backend Infrastructure. Let's build something resilient.",
     email:    'evinbrijesh@gmail.com',
     github:   'https://github.com/evinbrijesh',
     linkedin: 'https://linkedin.com/in/evinbrijesh',
-    cv:       '/cv.pdf',
+    domain:   'https://evinbrijesh.is-a.dev',
+    cv:       '/Evin_Brijesh_Nov.pdf',
   }
 }
